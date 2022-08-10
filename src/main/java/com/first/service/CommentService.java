@@ -47,6 +47,8 @@ public class CommentService {
 
 		Comment created = this.commentRepository.save(comment);
 
+		log.info(article.toString());
+
 		return CommentDto.createCommentDto(created);
 	}
 
