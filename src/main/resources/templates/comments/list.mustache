@@ -1,0 +1,133 @@
+<div class="comments-list">
+	{{#commentDto}}
+		<div class="card m-2" id="comment_{{id}}">
+			<div class="card-header">닉네임 : <b>
+				{{nickname}}
+				<button type="button"
+							data-bs-toggle="modal"  
+							data-bs-target="#comment-edit-modal" 
+							class="btn btn-sm btn-outline-primary"
+							data-bs-id="{{id}}"
+							data-bs-body="{{body}}"
+							data-bs-articleId="{{articleId}}"
+							data-bs-nickname="{{nickname}}">edit</button>
+				      <!-- 전송 버튼 -->
+				      <button type="button" class="btn btn-sm btn-outline-danger comment-delete-btn" data-comment-id="{{id}}">delete</button>
+			</div>
+			<div class="card-body">
+				<h1 class="card-text"><b>{{body}}</b></h1>
+			</div>
+		</div>
+	{{/commentDto}}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="comment-edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">댓글 수정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+		      <!-- 닉네임 입력 -->
+		      <div class="mb-3">
+		      	<label class="form-label">닉네임</label>
+		        <input type="text" class="form-control form-control-sm" id="edit-comment-nickname">
+		      </div>
+		      
+		      <!-- 댓글 본문 입력 -->
+		      <div class="mb-3">
+		        <label class="form-label">댓글 내용</label>
+		        <textarea type="text" class="form-control form-control-sm" rows="3" id="edit-comment-body"></textarea>
+		      </div>
+		      
+	          <input type="hidden" id="edit-comment-articleId">
+	          <input type="hidden" id="edit-comment-id">
+		      
+		      <!-- 전송 버튼 -->
+		      <button type="button" class="btn btn-outline-primary btn-sm" id="comment-update-btn">수정</button>
+	    </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--모달 이벤트 처리 -->
+<script>
+	{
+		const commentEditModal = document.querySelector("#comment-edit-modal");
+		commentEditModal.addEventListener("show.bs.modal", function(event) {
+			var button = event.relatedTarget;
+			var id = button.getAttribute("data-bs-id");
+			var nickname = button.getAttribute("data-bs-nickname");
+			var body = button.getAttribute("data-bs-body");
+			var articleId = button.getAttribute("data-bs-articleId");
+			
+			
+			document.querySelector("#edit-comment-nickname").value = nickname;
+			document.querySelector("#edit-comment-body").value = body;
+			document.querySelector("#edit-comment-id").value = id;
+			document.querySelector("#edit-comment-articleId").value = articleId;
+			
+		})
+	}
+	
+	{
+		const commentUpdateBtn = document.querySelector("#comment-update-btn");
+		
+		commentUpdateBtn.addEventListener("click", function(event) {
+			//수정 댓글 객체 생성
+			const comment = {
+				id:document.querySelector("#edit-comment-id").value,
+				nickname:document.querySelector("#edit-comment-nickname").value,
+				body:document.querySelector("#edit-comment-body").value,
+				articleId:document.querySelector("#edit-comment-articleId").value
+			}
+			
+			console.log(comment);
+			
+			//수정 rest api 호출 - fetch()
+			const url = `/api/article/comments/${comment.id}`;
+			console.log(url);
+			
+			fetch(url,{
+				method: "PATCH",
+				body: JSON.stringify(comment),
+				headers:{
+					"Content-Type":"application/json"
+				}
+			}).then(response => {
+				window.location.reload();
+			});
+			
+		})
+	}
+	
+	{
+		const commentDeleteBtns = document.querySelectorAll(".comment-delete-btn");
+		commentDeleteBtns.forEach(btn => {
+			btn.addEventListener("click", function(event) {
+				const commentDeleteBtn = event.target;
+				const commentId = commentDeleteBtn.getAttribute("data-comment-id");
+			
+				//삭제 rest api 호출 - fetch()
+				const url = `/api/article/comments/${commentId}`;
+				console.log(url);
+				
+				fetch(url,{
+					method: "DELETE"
+				}).then(response => {
+					const target = document.querySelector(`#comment_${commentId}`);
+					target.remove();
+				});
+				
+			});
+		});
+		
+		
+		
+	}
+	
+</script>

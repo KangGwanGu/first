@@ -1,0 +1,37 @@
+{{>layout/header}}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{{article.id}}</td>
+      <td>{{article.title}}</td>
+      <td>{{article.content}}</td>
+    </tr>
+  </tbody>
+</table>
+
+{{>comments/comment}}
+
+<a href="/article/new">
+<button type="button" class="btn btn-primary">New Article</button>
+</a>
+<a href="/article/{{article.id}}/edit">
+<button type="button" class="btn btn-primary">Edit</button>
+</a>
+<a href="/article/{{article.id}}/delete">
+<button type="button" class="btn btn-danger">Delete</button>
+</a>
+<a href="/article/">
+<button type="button" class="btn btn-primary">All List</button>
+</a>
+
+{{>layout/footer}}

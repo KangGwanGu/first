@@ -1,0 +1,26 @@
+{{>layout/header}}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{{#articleList}}
+    <tr>
+      <td>{{id}}</td>
+      <td><a href="/article/{{id}}">{{title}}</a></td>
+      <td>{{content}}</td>
+    </tr>
+  	{{/articleList}}
+  </tbody>
+</table>
+
+<a href="/article/new">
+<button type="button" class="btn btn-primary">New Article</button>
+</a>
+
+{{>layout/footer}}
