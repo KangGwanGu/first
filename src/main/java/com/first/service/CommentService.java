@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.first.controller.repository.ArticleRepository;
@@ -31,11 +31,12 @@ public class CommentService {
 		// 조회
 		List<Comment> list = this.commentRepository.findByArticleId(id);
 
-		List<CommentDto> dtos = new ArrayList<CommentDto>();
-		list.stream().forEach(c -> dtos.add(CommentDto.createCommentDto(c)));
+		val dtos = new ArrayList<CommentDto>();
+		list.forEach(c -> dtos.add(CommentDto.createCommentDto(c)));
 
 		System.out.println("111111111111111111111");
 		System.out.println("2222222222222222222222");
+		System.out.println("33333333333333333333");
 
 
 
