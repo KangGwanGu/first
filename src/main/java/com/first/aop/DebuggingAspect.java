@@ -14,10 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DebuggingAspect {
 
-	@Pointcut( "execution(* com.first.api.CommentApiController.create(..))")
+//	@Pointcut( "execution(* com.first.api.CommentApiController.create(..))")
 	private void cut() {}
 
-	@Before("cut()")
+//	@Before("cut()")
 	public void loggingArgs(JoinPoint joinPoint) {
 		//입력값 가져오기
 		Object[] args = joinPoint.getArgs();
@@ -34,7 +34,7 @@ public class DebuggingAspect {
 		}
 	}
 
-	@AfterReturning(value = "cut()", returning = "returnObj")
+//	@AfterReturning(value = "cut()", returning = "returnObj")
 	public void loggingReturnValue(JoinPoint joinPoint, Object returnObj) {
 		//클래스명
 		String className = joinPoint.getTarget().getClass().getSimpleName();
