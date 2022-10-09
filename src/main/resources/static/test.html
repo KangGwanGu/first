@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="common.css">
+<script>
+
+	let xhttp = new XMLHttpRequest();
+
+	let jsonData = "";
+
+	xhttp.onreadystatechange = function () {
+		if(xhttp.readyState == 4 && xhttp.status == 200){
+			jsonData = this.responseText;
+			jsonfunc(this.responseText); //this = xhttp
+//		jsonfunc(xhttp.responseText); // 둘다 가능
+		}
+	}
+	xhttp.open("GET","data.json", true);
+	xhttp.send();
+
+	function jsonfunc( jsonText ) {
+		let json = JSON.parse(jsonText); // String -> json으로 변환
+
+		const surrenderField = document.querySelector("#surrenderField");
+		surrenderField.style.display = "none";
+
+		const tagetId = "surrenderTableBody";
+		for(i=0; i<json.item.surrenderList.length; i++){
+			const tdList = new Array();
+			createElement(tdList, "th", i + 1);
+			createElement(tdList, "td", json.item.surrenderList[i].year);
+			createElement(tdList, "td", json.item.surrenderList[i].mainsurrender);
+			displayResponse(tagetId, tdList);
+		}
+		surrenderField.style.display = "block";
+	}
+
+	const createElement = (instance, tag, value) => {
+		let td = document.createElement(tag);
+		td.appendChild(document.createTextNode(value));
+		instance.push(td);
+	}
+
+	const displayResponse = (instance, node) => {
+		let tableBody = document.querySelector("#" + instance);
+		let tr = document.createElement("tr");
+		node.forEach(td => tr.appendChild(td));
+		tableBody.appendChild(tr);
+		tableBody.appendChild(tr);
+	}
+
+	const clearBody = (instance) => {
+		let tableBody = document.querySelector("#" + instance);
+		tableBody.innerHTML = "";
+	}
+
+</script>
+</head>
+<body>
+	<fieldset id="surrenderField">
+		<label>응답 결과</label>
+			<table class="table" id="surrenderTable">
+				<thead>
+				<tr>
+					<th >#</th>
+					<th >년도</th>
+					<th >해지보험료</th>
+				</tr>
+				</thead>
+				<tbody id="surrenderTableBody">
+				</tbody>
+			</table>
+	</fieldset>
+	<input type="button" value="테스트버튼" onclick="jsonfunc(jsonData)">
+	<input type="button" value="초기화" onclick="clearBody('surrenderTableBody')">
+</body>
+</html>
