@@ -110,7 +110,7 @@ class ToCSV {
         document.body.appendChild(downloadLink)
 
         // 클릭 이벤트를 발생시켜 실제로 브라우저가 '다운로드'하도록 만들어줍시다.
-        downloadLink.click()
+        downloadLink.click();
     }
 
     getCSV(filename) {
