@@ -67,24 +67,40 @@ const clearBody = (instance) => {
 
 
 const csvBtn = document.querySelector("#csvBtn");
-csvBtn.click();
 csvBtn.addEventListener("click", async function() {
     const target = document.querySelector("#surrenderTable");
-    console.log(target);
+
+    let csvFile;
+    let csvData;
+    let csvInstance;
+
+    csvData = "\uFEFF" + target.innerText.replaceAll("\t",",");
+
+    console.log(csvData);
+
+    csvFile = new Blob([csvData], {type: "text/csv;charset=UTF-8"})
+    csvInstance = document.createElement("a")
+    csvInstance.download = target.id;
+    csvInstance.href = window.URL.createObjectURL(csvFile)
+    csvInstance.style.display = "none"
+    document.body.appendChild(csvInstance)
+    csvInstance.click();
 });
 
 class ToCSV {
     constructor() {
         // CSV 버튼에 이벤트 등록
-        document.querySelector('#csvBtn').addEventListener('click', e => {
-            e.preventDefault()
-            this.getCSV('mycsv.csv')
-        })
+        // document.querySelector('#csvBtn').addEventListener('click', e => {
+        //     e.preventDefault()
+        //     this.getCSV('mycsv.csv')
+        // })
     }
 
     downloadCSV(csv, filename) {
         let csvFile;
         let downloadLink;
+
+        csv = target.innerText.replaceAll("\t",",");
 
         const BOM = "\uFEFF";
         csv = BOM + csv
