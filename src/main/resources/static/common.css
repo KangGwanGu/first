@@ -85,7 +85,7 @@ fieldset {
 }
 
 .progress {
-    visibility: hidden;
+    visibility: visible;
     display: flex;
     height: 1rem;
     overflow: hidden;
