@@ -1,0 +1,422 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>TEST PAGE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<fieldset>
+    <legend><strong>파라미터 입력</strong></legend>
+    <div id="json-data" data-type="main">
+        <div data-type="object">
+            <div id="illustration" data-type="object" data-name="illustration" data-comment="">
+                <div data-type="value" id="baseDateDiv" data-name="baseDate" contenteditable="true"
+                     data-valuetype="string" onfocus="selector(this)">20221001
+                </div>
+                <div data-type="value" data-name="productCode" contenteditable="true" data-valuetype="string"
+                     onfocus="selector(this)">A0492
+                </div>
+                <div data-type="value" data-name="productName" contenteditable="true" data-valuetype="string"
+                     onfocus="selector(this)">iLove아이보험
+                </div>
+                <div id="customers" data-type="array" data-name="customers">
+                    <span class="addBtn"
+                          onclick='addData("customers","{\"customerTypeCode\":\"11\",\"customerName\":\"정용은\",\"socialSecurityNumber\":\"8104151\"}")'>+</span>
+                </div>
+                <div id="insurances" data-type="array" data-name="insurances">
+                    <span class="addBtn"
+                          onclick='addData("insurances","{\"insuranceCode\":\"11656\",\"insuranceName\":\"보종코드\",\"insuranceTypeCode\":\"01\",\"billingFrequencyCode\":\"00\",\"billInfos\":[{\"faceAmount\":5000000,\"insuredPeriod\":1,\"insuredPeriodTypeCode\":\"Y\",\"billingPeriod\":0,\"billingPeriodTypeCode\":\"Y\"}]}")'>+</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<p>
+    <input type=button class="btn btn-sm btn-outline-danger" onClick="view2json('json-data')"
+           value="View to json"></input>
+    <input type=button id="btnJsonCopy" class="btn btn-sm btn-outline-danger" data-target="view2json"
+           value="Copy"></input>
+<p>
+
+<fieldset>
+
+    <legend><strong>json 변환 결과</strong></legend>
+
+    <div id=view2json contenteditable="true"></div>
+
+</fieldset>
+
+
+<fieldset>
+
+    <legend><strong>응답 결과 json</strong></legend>
+
+    <div id="responseJson"></div>
+
+</fieldset>
+
+
+<p>
+
+<div>
+
+    <input type=button id="btnPremium" class="btn btn-sm btn-outline-primary" data-code="premium" value="보험료조회"></input>
+
+    <input type=button id="btnSurrender" class="btn btn-sm btn-outline-primary" data-code="surrender"
+           value="해지환급금조회"></input>
+
+    <input type=button id="btnBenefits" class="btn btn-sm btn-outline-primary" data-code="benefit"
+           value="보장내역조회"></input>
+
+</div>
+
+<p>
+
+
+<fieldset id="premiumField">
+
+    <legend><strong>보험료 조회 결과</strong></legend>
+
+    <div id="premiumDiv">
+
+        <table id="premiumTbl" class="table" aria-label="보험료">
+
+            <thead>
+
+            <tr>
+
+                <th width="50px" scope="col">#</th>
+
+                <th width="100px" scope="col">상품코드</th>
+
+                <th width="300px" scope="col">상품명</th>
+
+                <th width="100px" scope="col">보종코드</th>
+
+                <th scope="col">상령일 이전 보험료</th>
+
+                <th scope="col">상령일 이후 보험료</th>
+
+                <th width="95px" scope="col" data-btn-col="true">
+
+                    <input type="button" id="btnPremiumInit" class="btn btn-sm btn-sm-table btn-outline-secondary"
+                           data-code="premium" value="X">
+
+                    <input type="button" id="btnPremiumModal" class="btn btn-sm btn-sm-table btn-outline-secondary"
+                           data-code="premium" value="▢">
+
+                    <input type="button" id="btnPremiumCsv" class="btn btn-sm btn-sm-table btn-outline-secondary"
+                           data-code="premium" value="E">
+
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="premiumTblBd">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</fieldset>
+
+
+<fieldset id="surrenderField">
+
+    <legend><strong>해지환급금 조회 결과</strong></legend>
+
+    <div id="surrenderDiv">
+
+        <table id="surrenderTbl" class="table" aria-label="해지환급금">
+
+            <thead>
+
+            <tr>
+
+                <th width="50px" scope="col">#</th>
+
+                <th width="100px" scope="col">상품코드</th>
+
+                <th width="300px" scope="col">상품명</th>
+
+                <th width="100px" scope="col">보종코드</th>
+
+                <th scope="col">경과기간</th>
+
+                <th scope="col">보험나이</th>
+
+                <th scope="col">보험료 누계</th>
+
+                <th scope="col">해지환급금</th>
+
+                <th scope="col">환급률</th>
+
+                <th width="95px" scope="col" data-btn-col="true">
+
+                    <input type="button" id="btnSurrenderInit" class="btn btn-sm btn-sm-table btn-outline-secondary"
+                           data-code="surrender" value="X">
+
+                    <input type="button" id="btnSurrenderModal" class="btn btn-sm btn-sm-table btn-outline-secondary"
+                           data-code="surrender" value="▢">
+
+                    <input type="button" id="btnSurrenderCsv" class="btn btn-sm btn-sm-table btn-outline-secondary"
+                           data-code="surrender" value="E">
+
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="surrenderTblBd">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</fieldset>
+
+
+<fieldset id="benefitContentsField">
+
+    <legend><strong>보장내역 조회 결과</strong></legend>
+
+    <div id="benefitContentsDiv">
+
+        <table id="benefitContentsTbl" class="table" aria-label="보장내역">
+
+            <thead>
+
+            <tr>
+
+                <th width="50px" scope="col">#</th>
+
+                <th width="100px" scope="col">상품코드</th>
+
+                <th width="300px" scope="col">상품명</th>
+
+                <th width="100px" scope="col">보종코드</th>
+
+                <th scope="col">보장금액</th>
+
+                <th scope="col">보장금액비고</th>
+
+                <th scope="col">보장내용</th>
+
+                <th scope="col">보장구분명</th>
+
+                <th width="95px" scope="col" data-btn-col="true">
+
+                    <input type="button" id="btnBenefitContentsInit"
+                           class="btn btn-sm btn-sm-table btn-outline-secondary" data-code="benefitContents" value="X">
+
+                    <input type="button" id="btnBenefitContentsModal"
+                           class="btn btn-sm btn-sm-table btn-outline-secondary" data-code="benefitContents" value="▢">
+
+                    <input type="button" id="btnBenefitContentsCsv"
+                           class="btn btn-sm btn-sm-table btn-outline-secondary" data-code="benefitContents" value="E">
+
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="benefitContentsTblBd">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</fieldset>
+
+
+<fieldset id="benefitDisbursementNotesField">
+
+    <legend><strong>해지환급금사유 조회 결과</strong></legend>
+
+    <div id="benefitDisbursementNotesDiv">
+
+        <table id="benefitDisbursementNotesTbl" class="table" aria-label="해지환급금사유">
+
+            <thead>
+
+            <tr>
+
+                <th width="50px" scope="col">#</th>
+
+                <th width="100px" scope="col">상품코드</th>
+
+                <th width="300px" scope="col">상품명</th>
+
+                <th width="100px" scope="col">보종코드</th>
+
+                <th scope="col">해지환급금지급사유</th>
+
+                <th width="95px" scope="col" data-btn-col="true">
+
+                    <input type="button" id="btnBenefitDisbursementNotesInit"
+                           class="btn btn-sm btn-sm-table btn-outline-secondary" data-code="benefitDisbursementNotes"
+                           value="X">
+
+                    <input type="button" id="btnBenefitDisbursementNotesModal"
+                           class="btn btn-sm btn-sm-table btn-outline-secondary" data-code="benefitDisbursementNotes"
+                           value="▢">
+
+                    <input type="button" id="btnBenefitDisbursementNotesCsv"
+                           class="btn btn-sm btn-sm-table btn-outline-secondary" data-code="benefitDisbursementNotes"
+                           value="Ε">
+
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="benefitDisbursementNotesTblBd">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</fieldset>
+
+
+<div id="modal" class="modal-overlay">
+
+    <div class="modal-window">
+
+        <div id="modalTitle" class="modal-title">
+
+            <h2>modal</h2>
+
+        </div>
+
+        <hr>
+
+        <div id="modalContent" class="modal-content">
+
+        </div>
+
+        <hr>
+
+        <div class="modal-close-area">
+
+            <input type="button" id="btnModalClose" class="btn btn-sm btn-outline-secondary" value="Close"></input>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="modalJson" class="modal-json-overlay">
+
+    <div class="modal-json-window">
+
+        <div id="modalJsonTitle" class="modal-json-title">
+
+            <h2># view json</h2>
+
+        </div>
+
+        <hr>
+
+        <div id="modalJsonContent" class="modal-json-content">
+
+            <pre id="modalJsonContentTextarea" contenteditable="true">
+
+            </pre>
+
+        </div>
+
+        <hr>
+
+        <div class="modal-json-close-area">
+
+            <div>
+
+                <input type=button data-target="view2json" class="btn btn-sm btn-outline-info"
+                       onclick="json2view('modalJsonContentTextarea')" value="Json to view"></input>
+
+                <input type="button" id="btnModalJsonCopy" class="btn btn-sm btn-outline-danger"
+                       data-target="modalJsonContentTextarea" value="Copy"></input>
+
+                <input type="button" id="btnModalJsonClose" class="btn btn-sm btn-outline-secondary"
+                       value="Close"></input>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="modalTable" class="modal-table-overlay">
+
+    <div class="modal-table-window">
+
+        <div id="modalTableTitle" class="modal-table-title">
+
+            <h2># view table</h2>
+
+        </div>
+
+        <hr>
+
+        <div id="modalTableContent" class="modal-table-content">
+
+            <pre id="modalTableContentTextarea" class="pre-table">
+
+            </pre>
+
+        </div>
+
+        <hr>
+
+        <div class="modal-table-close-area">
+
+            <div>
+
+                <input type="button" id="btnModalTableCsv" class="btn btn-sm btn-outline-success" data-code=""
+                       value="*.csv"></input>
+
+                <input type="button" id="btnModalTableClose" class="btn btn-sm btn-outline-secondary"
+                       value="Close"></input>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div>
+
+    <div id="progressBar" class="progress-bar"></div>
+
+</div>
+
+
+</body>
+
+<script src="js/test-main.js" type="text/javascript"></script>
+
+</html>

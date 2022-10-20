@@ -103,5 +103,12 @@ public class ArticleController {
 		
 		return "/article/showAll";
 	}
-	
+
+
+	@GetMapping("/test")
+	public String test(Model model) {
+
+
+		return "/test.html";
+	}
 }

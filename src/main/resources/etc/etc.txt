@@ -1,0 +1,2 @@
+* 크롬 바로가기 대상옆에 추가 명령어
+"C:\Users\THE K\Documents\GoogleChromePortable\GoogleChromePortable.exe" --disable-web-security --user-data-dir="C:\Users\THE K\Documents\GoogleChromePortable\Data"
