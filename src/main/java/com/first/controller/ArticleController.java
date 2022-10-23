@@ -34,7 +34,7 @@ public class ArticleController {
 	@GetMapping("/article/new")
 	public String edit(Model model) {
 		Article article = new Article();
-		article.setId(new Long(1));
+		article.setId(1L);
 		article.setTitle("");
 		article.setContent("");
 		model.addAttribute("article", article);
